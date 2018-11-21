@@ -1,0 +1,1 @@
+python test.py --dataroot ./datasets/arms_youtube --name arms_youtube_cyclegan --model cycle_gan --resize_or_crop scale_width --fineSize 640 --num_test 50

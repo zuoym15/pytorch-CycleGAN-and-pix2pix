@@ -21,6 +21,9 @@ if __name__ == '__main__':
         iter_data_time = time.time()
         epoch_iter = 0
 
+        
+        #model.save_networks(epoch)
+
         for i, data in enumerate(dataset):
             iter_start_time = time.time()
             if total_steps % opt.print_freq == 0:
@@ -42,16 +45,20 @@ if __name__ == '__main__':
                 if opt.display_id > 0:
                     visualizer.plot_current_losses(epoch, float(epoch_iter) / dataset_size, opt, losses)
 
-            if total_steps % opt.save_latest_freq == 0:
-                print('saving the latest model (epoch %d, total_steps %d)' % (epoch, total_steps))
-                save_suffix = 'iter_%d' % total_steps if opt.save_by_iter else 'latest'
-                model.save(save_suffix)
+            # if total_steps % opt.save_latest_freq == 0:
+            #     print('saving the latest model (epoch %d, total_steps %d)' % (epoch, total_steps))
+            #     save_suffix = 'iter_%d' % total_steps if opt.save_by_iter else 'latest'
+            #     model.save(save_suffix)
 
             iter_data_time = time.time()
-        if epoch % opt.save_epoch_freq == 0:
-            print('saving the model at the end of epoch %d, iters %d' % (epoch, total_steps))
-            model.save_networks('latest')
-            model.save_networks(epoch)
+
+        print('saving the model at the end of epoch %d, iters %d' % (epoch, total_steps))
+        model.save_networks('latest')
+
+        # if epoch % opt.save_epoch_freq == 0:
+        #     print('saving the model at the end of epoch %d, iters %d' % (epoch, total_steps))
+        #     model.save_networks('latest')
+        #     model.save_networks(epoch)
 
         print('End of epoch %d / %d \t Time Taken: %d sec' %
               (epoch, opt.niter + opt.niter_decay, time.time() - epoch_start_time))

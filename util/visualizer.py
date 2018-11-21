@@ -24,19 +24,28 @@ def save_images(webpage, visuals, image_path, aspect_ratio=1.0, width=256):
 
     for label, im_data in visuals.items():
         im = util.tensor2im(im_data)
-        image_name = '%s_%s.png' % (name, label)
-        save_path = os.path.join(image_dir, image_name)
+        #image_name = '%s_%s.png' % (name, label)
+        
+        
+        #print(save_path) #./results/...
+        #exit(0)
         h, w, _ = im.shape
         if aspect_ratio > 1.0:
             im = imresize(im, (h, int(w * aspect_ratio)), interp='bicubic')
         if aspect_ratio < 1.0:
             im = imresize(im, (int(h / aspect_ratio), w), interp='bicubic')
-        util.save_image(im, save_path)
 
-        ims.append(image_name)
-        txts.append(label)
-        links.append(image_name)
-    webpage.add_images(ims, txts, links, width=width)
+        if label == 'fake_B':
+            image_name = '%s.png' % name 
+            save_path = os.path.join(image_dir, image_name)
+            util.save_image(im, save_path)
+            break
+    
+    #     ims.append(image_name)
+    #     txts.append(label)
+    #     links.append(image_name)
+
+    # webpage.add_images(ims, txts, links, width=width)
 
 
 class Visualizer():
